@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "806675157032",
+    "project_id": "pilot-project-dd7e8",
+    "storage_bucket": "pilot-project-dd7e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806675157032:android:d1d6da0a2f5ea172e1251d",
+        "android_client_info": {
+          "package_name": "com.example.onboarding"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "806675157032-7qiqn5cr4gc9ekk1onrknuc3g1hfahb1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZtgC4osTQj1EqrmOB-PsmcXMZoGApA0c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "806675157032-7qiqn5cr4gc9ekk1onrknuc3g1hfahb1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
