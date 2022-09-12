@@ -11,14 +11,14 @@ class Comments {
   factory Comments.fromJson(Map<String, dynamic> json) => Comments(
     user: json["user"],
     recipe: json["recipeId"],
-    comment: json["comment"]
+    comment: json["comments"]
 
   );
 
   Map<String, dynamic> toJson()=> {
-    "User1": user,
+    "user": user,
     "recipeId": recipe,
-    "comment": comment
+    "comments": comment
   };
 
 }

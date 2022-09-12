@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +7,7 @@ import 'LoginWidget.dart';
 class SignupScreen extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final userNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +15,18 @@ class SignupScreen extends StatelessWidget {
       appBar: AppBar(),
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              decoration: InputDecoration(
+                  labelText: 'Username',
+                  prefixIcon: Icon(
+                    Icons.account_box,
+                  ),
+                  border: OutlineInputBorder()),
+              controller: userNameController,
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
@@ -45,8 +59,10 @@ class SignupScreen extends StatelessWidget {
                   email: emailController.text.trim(),
                   password: passwordController.text.trim());
 
+              addUser();
+
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()));
+                  MaterialPageRoute(builder: (context) => LoginScreen(userName: userNameController.text,)));
 
 
             },
@@ -58,5 +74,19 @@ class SignupScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+
+
+
+
+  CollectionReference users =
+  FirebaseFirestore.instance.collection('users');
+
+  Future<void> addUser() {
+    // Call the user's CollectionReference to add a new user
+    return users.add({
+      'name': userNameController.text,
+    });
   }
 }

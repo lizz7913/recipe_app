@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:onboarding/models/recipe.dart';
 
 import 'ingredient-screen.dart';
+import 'models/comments.dart';
 
 class RecipeScreen extends StatelessWidget {
+  final String userName;
+
+  const RecipeScreen({Key key,@required this.userName}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -18,13 +22,14 @@ class RecipeScreen extends StatelessWidget {
         return ListView(
           children: snapshot.data.docs.map((document) {
             var food=Recipe.fromJson(document.data());
+            var comment=Comments.fromJson(document.data());
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
                   onPressed: (){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => IngredientScreen(id: food.id,)));
+                        MaterialPageRoute(builder: (context) => IngredientScreen(id: food.id, user: this.userName, recipe: comment.recipe,)));
                   },
                     child:Text(food.name)),
 

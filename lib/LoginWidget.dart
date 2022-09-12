@@ -7,6 +7,7 @@ import 'SignupScreen.dart';
 class LoginWidget extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final userNameController = TextEditingController();
 
   @override
   void dispose() {
@@ -18,6 +19,19 @@ class LoginWidget extends StatelessWidget {
     return Column(
       children: [
         Text('Login'),
+        SizedBox(height: 50,),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextFormField(
+            decoration: InputDecoration(
+                labelText: 'User name',
+                prefixIcon: Icon(
+                  Icons.account_box,
+                ),
+                border: OutlineInputBorder()),
+            controller: userNameController,
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
@@ -51,7 +65,7 @@ class LoginWidget extends StatelessWidget {
                     email: emailController.text.trim(),
                     password: passwordController.text.trim());
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
+                    MaterialPageRoute(builder: (context) => LoginScreen(userName: userNameController.text,)));
               } on FirebaseAuthException catch (e) {
                 print(e);
                 if (e.code == 'user-not-found') {
@@ -90,13 +104,16 @@ class LoginWidget extends StatelessWidget {
 }
 
 class LoginScreen extends StatelessWidget {
+  final String userName;
+
+  const LoginScreen({Key key,@required this.userName}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Recipe'),
       ),
-      body: RecipeScreen(),
+      body: RecipeScreen(userName: this.userName,),
     );
   }
 }
