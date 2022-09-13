@@ -61,31 +61,44 @@ class _SignupScreenState extends State<SignupScreen> {
           ),
           Container(
             color: Colors.blue,
-            child: MaterialButton(onPressed: (){
-
-              FirebaseAuth.instance.createUserWithEmailAndPassword(
-                  email: emailController.text.trim(),
-                  password: passwordController.text.trim());
-
-              addUser();
-
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => RecipesScreen(userName: userNameController.text,)));
-
-
-            },
-            child: Text('Register',
-            style: TextStyle(
-              color: Colors.white
-            ),),),
+            child: MaterialButton(
+              onPressed: _signUp,
+              child: Text(
+                'Register',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           )
         ],
       ),
     );
   }
 
-  CollectionReference users =
-  FirebaseFirestore.instance.collection('users');
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  void _signUp() async {
+    // you also have to validate fields
+    // and display error messages like in LoginPage
+    // I will leave that to you 🌚🌚🌚
+
+
+    // create user is async function, you have to wait for it to complete
+    // and to put it in try catch
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
+
+      addUser();
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => RecipesScreen(
+                    userName: userNameController.text,
+                  )));
+    } catch (e) {}
+  }
 
   Future<void> addUser() {
     // Call the user's CollectionReference to add a new user
