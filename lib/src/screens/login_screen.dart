@@ -85,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             child: Text(
               errorMessage,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.red,
               ),
@@ -105,10 +106,32 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future _performSingIn() async {
+    // validate fields before trying to login
+    // validate function returns error string
+    // if its not null => there is error => display it to user
+    // else => no errors and continue singin
+    String validationErrorMessage = _validateFields();
+    if(validationErrorMessage != null){
+      setState(() {
+        errorMessage = validationErrorMessage;
+      });
+      return;
+    }else{
+      // clear prevoius error message
+      setState(() {
+        errorMessage = "";
+      });
+
+    }
+
     try {
+      String username = userNameController.text.trim();
+      String email = emailController.text.trim();
+      String password = passwordController.text.trim();
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim());
+          email: email,
+          password: password,
+      );
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => RecipesScreen(userName: userNameController.text,)));
     } on FirebaseAuthException catch (e) {
@@ -116,7 +139,40 @@ class _LoginScreenState extends State<LoginScreen> {
         errorMessage = e.message;
       });
     }
-
   }
+
+  String _validateFields(){
+    // validate all fields has value
+    String username = userNameController.text.trim();
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+    if(username.isEmpty || email.isEmpty || password.isEmpty ){
+      return "Please Fill all fields";
+    }
+
+    // validate email is valid
+    // email validation can be complicated
+    // but here we will just check if email has '@' in it
+    // it it has '@' we will assume it is valid email
+    // else => its not valid
+    if(! email.contains("@")){
+      return "Invalid Email Address";
+    }
+
+    // we can also validate password
+    // for example we can say it has to be at least
+    // 8 characters long
+    // but I will leave it to you 🌚🌚
+
+    // we can also split validation to many functions
+    // to be more readable and clean
+    // for example _validateEmail and _validatePassword
+    // I will also leave that to you 🌚🌚
+
+    // return null => means there is no validation errors
+    return null;
+  }
+
+
 }
 
