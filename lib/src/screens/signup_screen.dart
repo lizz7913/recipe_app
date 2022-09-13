@@ -5,9 +5,16 @@ import 'package:onboarding/src/screens/recipes_screen.dart';
 
 import 'login_screen.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final userNameController = TextEditingController();
 
   @override
@@ -76,10 +83,6 @@ class SignupScreen extends StatelessWidget {
       ),
     );
   }
-
-
-
-
 
   CollectionReference users =
   FirebaseFirestore.instance.collection('users');
