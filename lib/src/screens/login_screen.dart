@@ -4,10 +4,19 @@ import 'package:onboarding/src/screens/recipes_screen.dart';
 
 import 'signup_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final userNameController = TextEditingController();
+
+  String errorMessage = "";
 
   @override
   void dispose() {
@@ -60,27 +69,24 @@ class LoginScreen extends StatelessWidget {
           Container(
             color: Colors.blue,
             child: MaterialButton(
-              onPressed: () async {
-                try {
-                  await FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: emailController.text.trim(),
-                      password: passwordController.text.trim());
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RecipesScreen(userName: userNameController.text,)));
-                } on FirebaseAuthException catch (e) {
-                  print(e);
-                  if (e.code == 'user-not-found') {
-                    print('No user found for that email.');
-                  } else if (e.code == 'wrong-password') {
-                    print('Wrong password provided for that user.');
-                  }
-                }
-              },
+              onPressed: _performSingIn,
               child: Text(
                 'LOGIN',
                 style: TextStyle(
                   color: Colors.white,
                 ),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal: 10,
+            ),
+            child: Text(
+              errorMessage,
+              style: TextStyle(
+                color: Colors.red,
               ),
             ),
           ),
@@ -98,10 +104,19 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim());
+  Future _performSingIn() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => RecipesScreen(userName: userNameController.text,)));
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message;
+      });
+    }
+
   }
 }
 
