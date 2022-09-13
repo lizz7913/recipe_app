@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:onboarding/recipes_screen.dart';
+import 'package:onboarding/src/screens/recipes_screen.dart';
 
 import 'SignupScreen.dart';
 

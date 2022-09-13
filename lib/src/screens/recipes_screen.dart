@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:onboarding/models/recipe.dart';
 
 import 'ingredient-screen.dart';
-import 'models/comments.dart';
+import '../../models/comments.dart';
 
 class RecipeScreen extends StatelessWidget {
   final String userName;
