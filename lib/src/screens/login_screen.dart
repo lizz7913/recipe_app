@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:onboarding/src/screens/recipes_screen.dart';
 
-import 'SignupScreen.dart';
+import 'signup_screen.dart';
 
 class LoginWidget extends StatelessWidget {
   final emailController = TextEditingController();
@@ -113,7 +113,7 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Recipe'),
       ),
-      body: RecipeScreen(userName: this.userName,),
+      body: RecipesScreen(userName: this.userName,),
     );
   }
 }

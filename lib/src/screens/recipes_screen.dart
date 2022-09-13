@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:onboarding/models/recipe.dart';
 
-import 'ingredient-screen.dart';
 import '../../models/comments.dart';
+import 'ingredient_screen.dart';
 
-class RecipeScreen extends StatelessWidget {
+class RecipesScreen extends StatelessWidget {
   final String userName;
 
-  const RecipeScreen({Key key,@required this.userName}) : super(key: key);
+  const RecipesScreen({Key key,@required this.userName}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
