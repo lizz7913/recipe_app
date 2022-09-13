@@ -1,12 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:onboarding/src/screens/recipes_screen.dart';
 
-import 'LoginWidget.dart';
+import 'login_screen.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final userNameController = TextEditingController();
 
   @override
@@ -53,35 +61,44 @@ class SignupScreen extends StatelessWidget {
           ),
           Container(
             color: Colors.blue,
-            child: MaterialButton(onPressed: (){
-
-              FirebaseAuth.instance.createUserWithEmailAndPassword(
-                  email: emailController.text.trim(),
-                  password: passwordController.text.trim());
-
-              addUser();
-
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginScreen(userName: userNameController.text,)));
-
-
-            },
-            child: Text('Register',
-            style: TextStyle(
-              color: Colors.white
-            ),),),
+            child: MaterialButton(
+              onPressed: _signUp,
+              child: Text(
+                'Register',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           )
         ],
       ),
     );
   }
 
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  void _signUp() async {
+    // you also have to validate fields
+    // and display error messages like in LoginPage
+    // I will leave that to you 🌚🌚🌚
 
 
+    // create user is async function, you have to wait for it to complete
+    // and to put it in try catch
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
 
+      addUser();
 
-  CollectionReference users =
-  FirebaseFirestore.instance.collection('users');
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => RecipesScreen(
+                    userName: userNameController.text,
+                  )));
+    } catch (e) {}
+  }
 
   Future<void> addUser() {
     // Call the user's CollectionReference to add a new user
